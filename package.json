@@ -1,0 +1,31 @@
+{
+  "name": "cse341--web-services-books",
+  "version": "1.0.0",
+  "description": "Web Services",
+  "homepage": "https://github.com/remdeveloper15/CSE341--Web-Services-Books#readme",
+  "bugs": {
+    "url": "https://github.com/remdeveloper15/CSE341--Web-Services-Books/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remdeveloper15/CSE341--Web-Services-Books.git"
+  },
+  "license": "ISC",
+  "author": "Helaman Franco",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "nodemon --env-file=.env server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.13.0",
+    "nodemon": "^3.1.14"
+  }
+}
