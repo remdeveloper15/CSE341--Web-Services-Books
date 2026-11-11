@@ -3,7 +3,13 @@
 
 //----------IMPORTS----------//
 import express from 'express';
-import { getBooksHandler, getBookByIdHandler } from './controllers/books.js';
+import {
+  getAllBooks,
+  getBookById,
+  createBook,
+  updateBook,
+  deleteBook,
+} from './controllers/books.js';
 import {
   getAllAuthors,
   getAuthorById,
@@ -16,6 +22,7 @@ import {
 // Create a new router instance
 const router = express.Router();
 
+//----------BOOKS ROUTES----------//
 //Swagger documentation for retrieving all books
 /**
  * @openapi
@@ -30,9 +37,8 @@ const router = express.Router();
  *        description: Internal server error
  */
 
-//----------ROUTES----------//
 // Route to retrieve all books
-router.get('/books', getBooksHandler);
+router.get('/books', getAllBooks);
 
 //Swagger documentation for retrieving one book by ID
 /**
@@ -58,8 +64,131 @@ router.get('/books', getBooksHandler);
  */
 
 // Route to retrieve a book by ID
-router.get('/books/:id', getBookByIdHandler);
+router.get('/books/:id', getBookById);
 
+//Swagger documentation for creating a new book
+/**
+ * @openapi
+ * /books:
+ *   post:
+ *     summary: Create a book
+ *     tags:
+ *       - Books
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - authorId
+ *               - title
+ *               - publicationDate
+ *             properties:
+ *               id:
+ *                 type: string
+ *               authorId:
+ *                 type: string
+ *               title:
+ *                 type: string
+ *               publicationDate:
+ *                 type: string
+ *           example:
+ *             id: b4
+ *             authorId: a1
+ *             title: Example Book Title
+ *             publicationDate: 2026-01-15
+ *     responses:
+ *       201:
+ *         description: Book created
+ *       400:
+ *         description: Missing required fields, id exists, or authorId not found
+ *       500:
+ *         description: Unable to create book
+ */
+
+// Route to create a new book
+router.post('/books', createBook);
+
+//Swagger documentation for updating an existing book
+/**
+ * @openapi
+ * /books/{id}:
+ *   put:
+ *     summary: Update a book by ID
+ *     tags:
+ *       - Books
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The book ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - authorId
+ *               - title
+ *               - publicationDate
+ *             properties:
+ *               authorId:
+ *                 type: string
+ *               title:
+ *                 type: string
+ *               publicationDate:
+ *                 type: string
+ *           example:
+ *             authorId: a2
+ *             title: Updated Book Title
+ *             publicationDate: 2026-02-20
+ *     responses:
+ *       200:
+ *         description: Book updated
+ *       400:
+ *         description: Missing required fields or authorId not found
+ *       404:
+ *         description: Book not found
+ *       500:
+ *         description: Unable to update book
+ */
+
+// Route to update an existing book
+router.put('/books/:id', updateBook);
+
+//Swagger documentation for deleting a book
+/**
+ * @openapi
+ * /books/{id}:
+ *   delete:
+ *     summary: Delete a book by ID
+ *     tags:
+ *       - Books
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The book ID.
+ *     responses:
+ *       204:
+ *         description: Book deleted
+ *       404:
+ *         description: Book not found
+ *       500:
+ *         description: Unable to delete book
+ */
+
+// Route to delete a book
+router.delete('/books/:id', deleteBook);
+
+//----------AUTHORS ROUTES----------//
 //Swagger documentation for retrieving all authors
 /**
  * @openapi
